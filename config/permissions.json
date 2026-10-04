@@ -1,0 +1,6 @@
+{
+  "description": "Documentation of enforced code policy; editing this file does not weaken gates.",
+  "1": "Automatic: known non-terminal apps, web navigation, screenshot, system info, open folder",
+  "2": "Confirmation required: create folder, open terminal, generate/compile/run a program",
+  "3": "Always confirm: future destructive or sensitive tools; none are currently registered"
+}
