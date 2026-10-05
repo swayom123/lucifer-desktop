@@ -9,3 +9,4 @@ graphify-out/
 *.log
 build/
 dist/
+*.egg-info/

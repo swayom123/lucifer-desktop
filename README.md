@@ -1,5 +1,51 @@
 # Lucifer
 
+## New modular foundation (Phases 1–2)
+
+The `lucifer/` package adds a separate, production-oriented foundation for the future
+multi-agent operating layer. The existing desktop assistant described below is preserved.
+The API and CLI accept and persist typed tasks. A separate Phase 2 engine can validate
+plans, route registered agents, run dependent tasks with bounded retries, and verify
+their results. No provider or agent is registered by default, and tools cannot execute.
+
+Install the foundation and development tools in a Python 3.12+ environment:
+
+```bash
+python -m pip install -e '.[foundation,dev]'
+```
+
+Run the local API, bound to loopback:
+
+```bash
+python -m uvicorn lucifer.apps.api.app:app --host 127.0.0.1 --port 8000
+```
+
+Submit and inspect tasks through `POST /tasks` and `GET /tasks/{id}`. `GET /health`
+reports API availability. The CLI uses the same SQLite database:
+
+```bash
+lucifer-core health
+lucifer-core create "Inspect this repository"
+lucifer-core show TASK_UUID
+```
+
+Set `LUCIFER_DATA_DIR` or `LUCIFER_FOUNDATION_DB` to choose the data location.
+`LUCIFER_LOG_LEVEL` controls JSON log verbosity. No API keys are needed for Phase 1.
+The API is local development only and has no authentication; keep it on loopback.
+
+Run Phase 1 checks:
+
+```bash
+ruff check lucifer tests/test_foundation.py tests/test_phase2.py
+mypy lucifer
+pytest -q tests/test_foundation.py tests/test_phase2.py
+```
+
+See [architecture](docs/architecture.md) for boundaries and the next milestone.
+See [task lifecycle](docs/task-lifecycle.md) for Phase 2 transitions and limits.
+
+## Existing desktop assistant
+
 A native Python/PySide6 desktop assistant with real, permission-aware desktop actions.
 This release implements AI-routed typed and voice commands, hands-free local recognition,
 LiveKit speech output and a spoken login briefing. It never invents system data.

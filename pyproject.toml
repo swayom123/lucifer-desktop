@@ -17,11 +17,13 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8,<10", "pytest-qt>=4.4,<5", "ruff>=0.11,<1"]
+dev = ["pytest>=8,<10", "pytest-qt>=4.4,<5", "ruff>=0.11,<1", "mypy>=1.15,<2", "httpx>=0.27,<1"]
+foundation = ["fastapi>=0.115,<1", "uvicorn>=0.34,<1", "SQLAlchemy>=2.0,<3", "pydantic>=2,<3"]
 voice = ["faster-whisper>=1.2,<2", "numpy>=2,<3", "av>=14,<19"]
 
 [project.scripts]
 lucifer = "main:main"
+lucifer-core = "lucifer.apps.cli.main:main"
 
 [build-system]
 requires = ["setuptools>=77"]
@@ -33,7 +35,7 @@ include-package-data = true
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["ai*", "automation*", "config*", "core*", "database*", "services*", "tools*", "ui*", "voice*"]
+include = ["ai*", "automation*", "config*", "core*", "database*", "services*", "tools*", "ui*", "voice*", "lucifer*"]
 exclude = ["tests*", "scripts*", "graphify-out*"]
 
 [tool.setuptools.package-data]
@@ -47,3 +49,8 @@ pythonpath = ["."]
 [tool.ruff]
 line-length = 100
 target-version = "py312"
+
+[tool.mypy]
+python_version = "3.12"
+packages = ["lucifer"]
+strict = true
